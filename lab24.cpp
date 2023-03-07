@@ -28,7 +28,88 @@ ComplexNumber ComplexNumber::operator-(const ComplexNumber &c){
 	return ComplexNumber(real-c.real,imag-c.imag);
 }
 
-//Write your code here
+ComplexNumber ComplexNumber::operator*(const ComplexNumber &c){
+	double w,x,y,z;
+	w = real*c.real; //real
+	x = real*c.imag; //imag
+	y = imag*c.real; //imag
+	z = -imag*c.imag; //real
+	return ComplexNumber(w+z,x+y);
+}
+
+ComplexNumber ComplexNumber::operator/(const ComplexNumber &c){
+	double w,x,y,z,a,b;
+	w = real*c.real; //ac
+	x = -real*c.imag; //-ad
+	y = imag*c.real; //bc
+	z = imag*c.imag; //bd
+	a = pow(c.real,2);
+	b = pow(c.imag,2);
+	return ComplexNumber((w+z)/(a+b),(x+y)/(a+b));
+
+}
+
+
+ComplexNumber operator+(const double &num,const ComplexNumber &c){
+	return ComplexNumber(num,0)+ComplexNumber(c.real,c.imag);
+}
+
+
+ComplexNumber operator-(const double &num,const ComplexNumber &c){
+	return ComplexNumber(num,0)-ComplexNumber(c.real,c.imag);
+}
+
+
+ComplexNumber operator*(const double &num,const ComplexNumber &c){
+	return ComplexNumber(num,0)*ComplexNumber(c.real,c.imag);
+}
+
+
+ComplexNumber operator/(const double &num,const ComplexNumber &c){
+	return ComplexNumber(num,0)/ComplexNumber(c.real,c.imag);
+}
+
+
+ComplexNumber operator==(const double &num,const ComplexNumber &c){
+	return ComplexNumber(num,0)==ComplexNumber(c.real,c.imag);
+}
+
+double ComplexNumber::abs(){
+	return sqrt(pow(real,2)+pow(imag,2));
+}
+
+double ComplexNumber::angle(){
+	return atan2(imag,real)*180/M_PI;
+}
+
+bool ComplexNumber::operator==(const ComplexNumber &c){
+	if(real == c.real && imag == c.imag) return true;
+	else return false;
+
+}
+
+ostream & operator<<(ostream &os, const ComplexNumber &c){
+	if(c.real != 0)
+	{
+		if(c.imag > 0)
+		{
+			return os << c.real << "+" << c.imag << "i";
+		}
+		else if(c.imag < 0)
+		{
+			return os << c.real << c.imag << "i";
+		}
+		else 
+		{
+			return os << c.real;
+		}
+	}
+	else
+	{
+		if(c.imag == 0) return os << "0";
+		else return os << c.imag << "i";
+	}
+}
 
 int main(){
 	ComplexNumber a(1.5,2),b(3.2,-2.5),c(-1,1.2);	
